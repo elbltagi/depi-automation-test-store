@@ -2,6 +2,7 @@ package Toolshop;
 
 import Toolshop.Data.Product;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -19,12 +20,14 @@ public class CartTests {
     WebDriver driver;
     WebDriverWait Wait;
     Product product_test;
+    SoftAssert soft = new SoftAssert();
 
-    @BeforeMethod
+    @BeforeTest
     void setup(){
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.navigate().to("https://practicesoftwaretesting.com/");
+
 
         Wait = new WebDriverWait(driver,Duration.ofSeconds(5));
         List<WebElement> productCards = Wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("a.card")));
@@ -34,23 +37,23 @@ public class CartTests {
         add_btn.click();
 
         String title = Wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("h1[data-test=\"product-name\"]"))).getText().trim().replace("$", "");;
-        String price = Wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("h1[data-test=\"unit-price\"]"))).getText().trim().replace("$", "");;
+        String price = Wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span[aria-label=\"unit-price\"]"))).getText().trim().replace("$", "");;
         product_test = new Product(title,price);
 
         WebElement toast_msg = Wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#toast-container div.ngx-toastr")));
-        Assert.assertEquals(toast_msg.getText().trim() ,"Product added to shopping cart.");
+        soft.assertEquals(toast_msg.getText().trim() ,"Product added to shopping cart.");
 
         driver.navigate().to("https://practicesoftwaretesting.com/checkout");
 
     }
-    @AfterMethod
+    @AfterTest
     void after(){
         driver.close();
     }
 
     @Test
     void validate_correct_product(){
-        SoftAssert soft = new SoftAssert();
+
 
         String title = Wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.product-title"))).getText().trim().replace("$", "");;
         String price = Wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span[data-test=\"product-price\"]"))).getText().trim().replace("$", "");;
@@ -58,7 +61,6 @@ public class CartTests {
         soft.assertEquals(title,product_test.title);
         soft.assertEquals(price,product_test.price);
         soft.assertAll();
-
     }
 
     @Test
@@ -67,11 +69,10 @@ public class CartTests {
 
         quantity.clear();
         quantity.sendKeys("4");
+        quantity.sendKeys(Keys.ENTER);
 
         Assert.assertEquals(quantity.getAttribute("value"),"4");
-
     }
-
 
     @Test
     void enter_zero_quantity(){
@@ -79,10 +80,38 @@ public class CartTests {
 
         quantity.clear();
         quantity.sendKeys("0");
+        quantity.sendKeys(Keys.ENTER);
 
-        Assert.assertEquals(quantity.getAttribute("value"),"4");
-
+        Assert.assertEquals(quantity.getAttribute("value"),"1");
     }
 
+    @Test
+    void enter_more_than_99(){
+        WebElement quantity = Wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input.form-control.quantity")));
+
+        quantity.clear();
+        quantity.sendKeys("120");
+        quantity.sendKeys(Keys.ENTER);
+
+        WebElement toast = Wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ngx-toastr.toast-warning")));
+
+        Assert.assertEquals(toast.getText().trim(),"You can order at most 99 of this product.");
+    }
+
+    @Test
+    void check_total(){
+
+        WebElement quantity = Wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input.form-control.quantity")));
+
+        quantity.clear();
+        quantity.sendKeys("3");
+        quantity.sendKeys(Keys.ENTER);
+
+        double total = Double.parseDouble(product_test.price) * 3;
+
+        String total_line = Wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span[data-test=\"line-price\"]"))).getText().trim().replace("$","");
+        Assert.assertEquals(total_line, Double.toString(total));
+
+    }
 
 }
