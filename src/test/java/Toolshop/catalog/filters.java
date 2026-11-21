@@ -1,4 +1,4 @@
-package Toolshop.Data;
+package Toolshop.catalog;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,11 +9,10 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.time.Duration;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 public class filters {
-  WebDriver driver ;
+    WebDriver driver ;
     @BeforeMethod
     void setup() {
         driver = new ChromeDriver();
@@ -47,15 +46,11 @@ public class filters {
         driver.findElement(By.id("search-query")).sendKeys("abdo");
         driver.findElement(By.cssSelector("[data-test='search-submit']")).click();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement noResults = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-test='no-results']")));
+        WebElement noResults = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-test='no-results']")));
         String actual_result = driver.findElement(By.cssSelector("[data-test='no-results']")).getText();
         String expected_result = "There are no products found.";
         Assert.assertEquals(actual_result,expected_result);
     }
-
-
-
 
 }
 
