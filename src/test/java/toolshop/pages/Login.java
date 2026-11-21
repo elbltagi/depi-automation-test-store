@@ -1,6 +1,6 @@
-package com.toolshop.pages;
+package toolshop.pages;
 
-import com.toolshop.core.BasePage;
+import toolshop.core.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 

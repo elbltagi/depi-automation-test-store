@@ -1,4 +1,4 @@
-package com.toolshop.core;
+package toolshop.core;
 
 public class data {
 

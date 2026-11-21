@@ -1,8 +1,8 @@
-package com.toolshop.tests;
+package toolshop.tests;
 
-import com.toolshop.core.BaseTest;
-import com.toolshop.core.data;
-import com.toolshop.pages.Login;
+import toolshop.core.BaseTest;
+import toolshop.core.data;
+import toolshop.pages.Login;
 import org.testng.annotations.Test;
 
 public class LoginTests extends BaseTest {
