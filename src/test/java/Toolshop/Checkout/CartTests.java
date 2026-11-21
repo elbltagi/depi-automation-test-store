@@ -21,7 +21,6 @@ public class CartTests {
     WebDriver driver;
     WebDriverWait wait;
     Product product_test;
-    SoftAssert soft = new SoftAssert();
     By quantityBy = By.cssSelector("input.form-control.quantity");
     
     private WebElement find_element(By by){
@@ -42,7 +41,6 @@ public class CartTests {
         driver.manage().window().maximize();
         driver.navigate().to("https://practicesoftwaretesting.com/");
 
-
         wait = new WebDriverWait(driver,Duration.ofSeconds(10));
 
         List<WebElement> productCards = find_elements(By.cssSelector("a.card"));
@@ -56,7 +54,7 @@ public class CartTests {
         add_btn.click();
 
         WebElement toast_msg = find_element(By.cssSelector("#toast-container div.ngx-toastr"));
-        soft.assertEquals(toast_msg.getText().trim() ,"Product added to shopping cart.");
+        Assert.assertEquals(toast_msg.getText().trim() ,"Product added to shopping cart.");
 
         driver.navigate().to("https://practicesoftwaretesting.com/checkout");
     }
@@ -68,12 +66,13 @@ public class CartTests {
 
     @Test
     void validate_correct_product(){
+        SoftAssert soft = new SoftAssert();
 
         String title = find_element(By.cssSelector("span.product-title")).getText().trim();
-        String price = find_element(By.cssSelector("span[data-test=\"product-price\"]")).getText().trim().replace("$", "");
+        String price = find_element(By.cssSelector("span[data-test='product-price']")).getText().trim().replace("$", "");
 
-        soft.assertEquals(title,product_test.title);
-        soft.assertEquals(price,product_test.price);
+        soft.assertEquals(title, product_test.title, "Title mismatch");
+        soft.assertEquals(price, product_test.price, "Price mismatch");
         soft.assertAll();
     }
 
@@ -115,6 +114,65 @@ public class CartTests {
 
         String total_line = find_element(By.cssSelector("span[data-test=\"line-price\"]")).getText().trim().replace("$","");
         Assert.assertEquals(Double.parseDouble(total_line),total,0.01);
+    }
+
+    @Test
+    void enter_99_quantity(){
+        WebElement quantity = find_element(quantityBy);
+
+        setQuantity("99");
+
+        wait.until(ExpectedConditions.attributeToBe(quantityBy,"value","99"));
+        Assert.assertEquals(quantity.getAttribute("value"),"99");
+    }
+
+    @Test
+    void enter_negative_quantity(){
+        WebElement quantity = find_element(quantityBy);
+
+        setQuantity("-1");
+
+        wait.until(ExpectedConditions.attributeToBe(quantityBy,"value","1"));
+        Assert.assertEquals(quantity.getAttribute("value"),"1");
+    }
+
+    @Test
+    void removing_product(){
+        WebElement remove_btn = find_element(By.cssSelector("a.btn.btn-danger"));
+
+        remove_btn.click();
+
+        String toast_msg = find_element(By.cssSelector("#toast-container div.ngx-toastr")).getText().trim();
+
+        Assert.assertEquals(toast_msg,"Product deleted.");
+    }
+
+    @Test
+    void adding_multi_add_to_cart (){
+        driver.navigate().back();
+
+        WebElement add_btn = find_element(By.id("btn-add-to-cart"));
+
+        WebElement input_quantity = find_element(By.id("quantity-input"));
+
+        input_quantity.clear();
+        input_quantity.sendKeys("99");
+
+        add_btn.click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ngx-toastr.toast-success")));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.ngx-toastr.toast-success")));
+
+        add_btn.click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ngx-toastr.toast-success")));
+
+
+        driver.navigate().forward();
+
+        Assert.assertEquals(find_element(quantityBy).getAttribute("value"),"99");
+
+
     }
 
 }
