@@ -2,7 +2,6 @@ package Toolshop.catalog;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -47,10 +46,9 @@ public class filters {
         driver.findElement(By.id("search-query")).sendKeys("abdo");
         driver.findElement(By.cssSelector("[data-test='search-submit']")).click();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement noResults = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-test='no-results']")));
-        String actual_result = driver.findElement(By.cssSelector("[data-test='no-results']")).getText();
-        String expected_result = "There are no products found.";
-        Assert.assertEquals(actual_result,expected_result);
+        By productCards = By.cssSelector("a.card");
+        wait.until(ExpectedConditions.numberOfElementsToBe(productCards, 0));
+        Assert.assertTrue(driver.findElements(productCards).isEmpty(), "Search returned products for a term with no matches");
     }
     @Test
     public void Sort_by_name_A_Z(){
