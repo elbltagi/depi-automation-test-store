@@ -131,7 +131,14 @@ public class CartTests extends Base{
 
         List<WebElement> productCards = find_elements(By.cssSelector("a.card"));
         productCards.get(1).click();
-         WebElement add_btn = find_element(By.id("btn-add-to-cart"));
+
+    }
+    @Test
+    void proceedToSignIn(){
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-test='proceed-1']"))).click();
+        Assert.assertTrue(find_element(By.cssSelector("[data-test='email']")).isDisplayed(), "Sign-in step did not open");
+
+        WebElement add_btn = find_element(By.id("btn-add-to-cart"));
         add_btn.click();
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ngx-toastr.toast-success")));
@@ -151,11 +158,4 @@ public class CartTests extends Base{
 
         Assert.assertEquals(Double.parseDouble(cart_total),total,0.01);
     }
-
-    @Test
-    void proceedToSignIn(){
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-test='proceed-1']"))).click();
-        Assert.assertTrue(find_element(By.cssSelector("[data-test='email']")).isDisplayed(), "Sign-in step did not open");
-    }
-       
 }
