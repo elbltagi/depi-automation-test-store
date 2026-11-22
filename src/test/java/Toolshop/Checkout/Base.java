@@ -14,9 +14,9 @@ import java.time.Duration;
 import java.util.List;
 
 public class Base {
-    WebDriver driver;
-    WebDriverWait wait;
-    Product product_test;
+    public WebDriver driver;
+    public WebDriverWait wait;
+    public Product product_test;
     By quantityBy = By.cssSelector("input.form-control.quantity");
 
     protected WebElement find_element(By by){
@@ -28,6 +28,7 @@ public class Base {
 
     @BeforeMethod
     void setup(){
+
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.navigate().to("https://practicesoftwaretesting.com/");
