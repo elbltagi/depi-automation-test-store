@@ -1,4 +1,4 @@
-package Toolshop.constants;
+package Toolshop.Auth.constants;
 
 public class ValidationMessages {public static final String REQUIRED_FIELD = "required";
     public static final String EMAIL_INVALID_FORMAT = "Email format is invalid";

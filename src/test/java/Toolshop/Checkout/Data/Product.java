@@ -1,4 +1,4 @@
-package Toolshop.Data;
+package Toolshop.Checkout.Data;
 
 public class Product {
     public String title;

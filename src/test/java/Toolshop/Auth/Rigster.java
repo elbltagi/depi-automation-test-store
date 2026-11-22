@@ -1,7 +1,7 @@
-package Toolshop;
+package Toolshop.Auth;
 
-import Toolshop.constants.ValidationMessages;
-import Toolshop.utils.TestDataBuilder;
+import Toolshop.Auth.constants.ValidationMessages;
+import Toolshop.Auth.utils.TestDataBuilder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
