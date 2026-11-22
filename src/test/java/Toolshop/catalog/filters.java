@@ -66,14 +66,14 @@ public class filters {
     }
     @Test
     public void Sort_by_name_Z_A(){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        String oldTitle = driver.findElement(By.cssSelector(".card-title")).getText();
-        driver.findElement(By.cssSelector("[data-test='sort']")).click();
-        driver.findElement(By.cssSelector("[value='name,desc']")).click();
-        wait.until(ExpectedConditions.not(ExpectedConditions.textToBe(By.cssSelector(".card-title"), oldTitle)));
-        String first_sort_element = driver.findElement(By.cssSelector("[data-test='product-name']")).getText();
-        String expected_element = "Wood Saw";
-        Assert.assertEquals(first_sort_element,expected_element);
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            String oldTitle = driver.findElement(By.cssSelector(".card-title")).getText();
+            driver.findElement(By.cssSelector("[data-test='sort']")).click();
+            driver.findElement(By.cssSelector("[value='name,desc']")).click();
+            wait.until(ExpectedConditions.not(ExpectedConditions.textToBe(By.cssSelector(".card-title"), oldTitle)));
+            String first_sort_element = driver.findElement(By.cssSelector("[data-test='product-name']")).getText();
+            String expected_element = "Wood Saw";
+            Assert.assertEquals(first_sort_element, expected_element);
     }
     @Test
     public void Sort_by_price_ascending(){

@@ -17,25 +17,12 @@ public class SignInTests extends Base{
 
     }
 
-    private void login(String email,String pass){
-        WebElement email_el  = find_element(By.id("email"));
-        WebElement pass_el  = find_element(By.id("password"));
-
-        email_el.clear();
-        email_el.sendKeys(email);
-
-        pass_el.clear();
-        pass_el.sendKeys(pass);
-
-        find_element(By.cssSelector("[data-test=\"login-submit\"]")).click();
-
-    }
 
     @Test
-    void SignInWithCorrectCredentials (){
+    public void SignInWithCorrectCredentials (){
         login("customer@practicesoftwaretesting.com","welcome01");
 
-By alreadyLoggedIn = By.xpath("//*[contains(normalize-space(text()), 'you are already logged in')]");
+        By alreadyLoggedIn = By.xpath("//*[contains(normalize-space(text()), 'you are already logged in')]");
 
         WebElement msg = find_element(alreadyLoggedIn);
         Assert.assertTrue(msg.isDisplayed(),"'Already logged in' message not shown");
