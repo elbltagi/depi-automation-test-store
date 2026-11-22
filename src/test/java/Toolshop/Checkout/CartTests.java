@@ -131,7 +131,7 @@ public class CartTests extends Base{
 
         List<WebElement> productCards = find_elements(By.cssSelector("a.card"));
         productCards.get(1).click();
-        WebElement add_btn = find_element(By.id("btn-add-to-cart"));
+         WebElement add_btn = find_element(By.id("btn-add-to-cart"));
         add_btn.click();
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ngx-toastr.toast-success")));
