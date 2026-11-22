@@ -1,4 +1,4 @@
-package Toolshop.utils;
+package Toolshop.Auth.utils;
 import java.util.UUID;
 public class TestDataBuilder {
     public static String generateUniqueEmail() {

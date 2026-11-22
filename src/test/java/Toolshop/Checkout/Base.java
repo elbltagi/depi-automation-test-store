@@ -1,6 +1,6 @@
 package Toolshop.Checkout;
 
-import Toolshop.Data.Product;
+import Toolshop.Checkout.Data.Product;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
