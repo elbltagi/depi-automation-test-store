@@ -135,24 +135,5 @@ public class CartTests extends Base{
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-test='proceed-1']"))).click();
         Assert.assertTrue(find_element(By.cssSelector("[data-test='email']")).isDisplayed(), "Sign-in step did not open");
     }
-        WebElement add_btn = find_element(By.id("btn-add-to-cart"));
-        add_btn.click();
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ngx-toastr.toast-success")));
-
-        driver.navigate().to("https://practicesoftwaretesting.com/checkout");
-
-        List<WebElement> products_cart = find_elements(By.cssSelector("span[data-test=\"line-price\"]"));
-
-        Assert.assertEquals(products_cart.size(),2);
-        double total = 0;
-        for (WebElement el : products_cart) {
-            String price = el.getText().replace("$","").trim();
-            total+=Double.parseDouble(price);
-        }
-
-        String cart_total = find_element(By.cssSelector("td[data-test=\"cart-total\"]")).getText().replace("$","").trim();
-
-        Assert.assertEquals(Double.parseDouble(cart_total),total,0.01);
-    }
 }
