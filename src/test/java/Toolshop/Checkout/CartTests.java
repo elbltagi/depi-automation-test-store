@@ -71,7 +71,6 @@ public class CartTests extends Base{
 
     @Test
     void enter_99_quantity(){
-        WebElement quantity = find_element(quantityBy);
 
         setQuantity("99");
 
@@ -81,8 +80,6 @@ public class CartTests extends Base{
 
     @Test
     void enter_negative_quantity(){
-        WebElement quantity = find_element(quantityBy);
-
         setQuantity("-1");
 
         wait.until(ExpectedConditions.attributeToBe(quantityBy,"value","1"));
