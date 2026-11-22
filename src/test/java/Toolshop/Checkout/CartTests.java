@@ -130,8 +130,14 @@ public class CartTests extends Base{
         driver.navigate().to("https://practicesoftwaretesting.com/");
 
         List<WebElement> productCards = find_elements(By.cssSelector("a.card"));
-
         productCards.get(1).click();
+
+    }
+    @Test
+    void proceedToSignIn(){
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-test='proceed-1']"))).click();
+        Assert.assertTrue(find_element(By.cssSelector("[data-test='email']")).isDisplayed(), "Sign-in step did not open");
+    }
         WebElement add_btn = find_element(By.id("btn-add-to-cart"));
         add_btn.click();
 
@@ -151,11 +157,5 @@ public class CartTests extends Base{
         String cart_total = find_element(By.cssSelector("td[data-test=\"cart-total\"]")).getText().replace("$","").trim();
 
         Assert.assertEquals(Double.parseDouble(cart_total),total,0.01);
-
-    }
-    @Test
-    void proceedToSignIn(){
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-test='proceed-1']"))).click();
-        Assert.assertTrue(find_element(By.cssSelector("[data-test='email']")).isDisplayed(), "Sign-in step did not open");
     }
 }
