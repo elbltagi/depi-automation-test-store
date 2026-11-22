@@ -43,7 +43,7 @@ public class Base {
 
         WebElement add_btn = find_element(By.id("btn-add-to-cart"));
         add_btn.click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#toast-container div.ngx-toastr")));
+org.testng.Assert.assertEquals(wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#toast-container div.ngx-toastr"))).getText().trim(), "Product added to shopping cart.");
 
         driver.navigate().to("https://practicesoftwaretesting.com/checkout");
     }
