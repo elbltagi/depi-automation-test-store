@@ -71,6 +71,7 @@ public class CartTests extends Base{
 
     @Test
     void enter_99_quantity(){
+        WebElement quantity = find_element(quantityBy);
 
         setQuantity("99");
 
@@ -80,6 +81,8 @@ public class CartTests extends Base{
 
     @Test
     void enter_negative_quantity(){
+        WebElement quantity = find_element(quantityBy);
+
         setQuantity("-1");
 
         wait.until(ExpectedConditions.attributeToBe(quantityBy,"value","1"));
@@ -120,7 +123,7 @@ public class CartTests extends Base{
 
         driver.navigate().forward();
 
-        Assert.assertEquals(find_element(quantityBy).getAttribute("value"),"99","maximum value is 99 and there more than 99 in cart");
+        Assert.assertEquals(find_element(quantityBy).getDomProperty("value"),"99","maximum value is 99 and there more than 99 in cart");
     }
     @Test
     void adding_another_product(){
@@ -128,8 +131,27 @@ public class CartTests extends Base{
 
         List<WebElement> productCards = find_elements(By.cssSelector("a.card"));
         productCards.get(1).click();
+        WebElement add_btn = find_element(By.id("btn-add-to-cart"));
+        add_btn.click();
 
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ngx-toastr.toast-success")));
+
+        driver.navigate().to("https://practicesoftwaretesting.com/checkout");
+
+        List<WebElement> products_cart = find_elements(By.cssSelector("span[data-test=\"line-price\"]"));
+
+        Assert.assertEquals(products_cart.size(),2);
+        double total = 0;
+        for (WebElement el : products_cart) {
+            String price = el.getText().replace("$","").trim();
+            total+=Double.parseDouble(price);
+        }
+
+        String cart_total = find_element(By.cssSelector("td[data-test=\"cart-total\"]")).getText().replace("$","").trim();
+
+        Assert.assertEquals(Double.parseDouble(cart_total),total,0.01);
     }
+
     @Test
     void proceedToSignIn(){
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-test='proceed-1']"))).click();
