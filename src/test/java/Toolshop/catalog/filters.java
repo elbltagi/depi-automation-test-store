@@ -18,17 +18,18 @@ public class filters {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://practicesoftwaretesting.com/");
-
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-
         // Wait for the product list to load before starting search/filter tests.
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
                 By.cssSelector("a.card")));
     }
     @Test
     public void Search_with_a_valid_term (){
+
         driver.findElement(By.id("search-query")).sendKeys("Long Nose Pliers");
         driver.findElement(By.cssSelector("[data-test='search-submit']")).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("[data-test='search-caption']")));
         String actual_result = driver.findElement(By.cssSelector("[data-test='search-caption']")).getText();
         String expected_result = "Searched for: Long Nose Pliers";
         Assert.assertEquals(actual_result,expected_result);
@@ -37,6 +38,8 @@ public class filters {
     public void Search_with_a_partial_term(){
         driver.findElement(By.id("search-query")).sendKeys("Pli");
         driver.findElement(By.cssSelector("[data-test='search-submit']")).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("a.card")));
         String actual_result = driver.findElement(By.cssSelector("[data-test='search-caption']")).getText();
         String expected_result = "Searched for: Pli";
         Assert.assertEquals(actual_result,expected_result);
@@ -97,25 +100,25 @@ public class filters {
 
     }
     @Test
-    public void Filter_by_category(){
+    public void Filter_by_category() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         String oldTitle = driver.findElement(By.cssSelector(".card-title")).getText();
-        driver.findElement(By.cssSelector("[data-test='category-01M81B64F0Q4TNYEA7HR2Z9XVH']")).click();
+        By hammerCategory = By.xpath("//label[contains(normalize-space(), 'Hammer')]//input");
+        wait.until(ExpectedConditions.elementToBeClickable(hammerCategory)).click();
         wait.until(ExpectedConditions.not(ExpectedConditions.textToBe(By.cssSelector(".card-title"), oldTitle)));
-        String first_sort_element = driver.findElement(By.cssSelector("[data-test='product-name']")).getText();
-        String expected_element = "Claw Hammer with Shock Reduction Grip";
-        Assert.assertEquals(first_sort_element,expected_element);
-
+        String firstProduct = driver.findElement(By.cssSelector("[data-test='product-name']")).getText();
+        Assert.assertEquals(firstProduct, "Claw Hammer with Shock Reduction Grip");
     }
+
     @Test
-    public void Filter_by_brand(){
+    public void Filter_by_brand() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         String oldTitle = driver.findElement(By.cssSelector(".card-title")).getText();
-        driver.findElement(By.cssSelector("[data-test='brand-01M81B643H949N1W0NY7V58ZFH']")).click();
+        By brandCheckbox = By.xpath("//label[contains(normalize-space(), 'ForgeFlex Tools')]//input");
+        wait.until(ExpectedConditions.elementToBeClickable(brandCheckbox)).click();
         wait.until(ExpectedConditions.not(ExpectedConditions.textToBe(By.cssSelector(".card-title"), oldTitle)));
-        String first_sort_element = driver.findElement(By.cssSelector("[data-test='product-name']")).getText();
-        String expected_element = "Claw Hammer with Shock Reduction Grip";
-        Assert.assertEquals(first_sort_element,expected_element);
+        String firstProduct = driver.findElement(By.cssSelector("[data-test='product-name']")).getText();
+        Assert.assertEquals(firstProduct, "Claw Hammer with Shock Reduction Grip");
     }
     @AfterMethod
     public void end (){
