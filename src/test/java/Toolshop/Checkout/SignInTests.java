@@ -35,7 +35,7 @@ public class SignInTests extends Base{
     void SignInWithCorrectCredentials (){
         login("customer@practicesoftwaretesting.com","welcome01");
 
-        By alreadyLoggedIn = By.xpath("//*[contains(normalize-space(), 'you are already logged in')]");
+By alreadyLoggedIn = By.xpath("//*[contains(normalize-space(text()), 'you are already logged in')]");
 
         WebElement msg = find_element(alreadyLoggedIn);
         Assert.assertTrue(msg.isDisplayed(),"'Already logged in' message not shown");
