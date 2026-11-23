@@ -50,10 +50,6 @@
                       Class names that surefire would otherwise skip (Login, Rigster,
                       filters, end_to_end, BillingAddress) only run that way.
                     -->
-                    <includes>
-                        <include>**/*Tests.java</include>
-                        <include>**/*Test.java</include>
-                    </includes>
                 </configuration>
             </plugin>
         </plugins>
