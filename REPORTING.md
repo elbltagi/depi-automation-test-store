@@ -16,8 +16,13 @@ report is a build artifact, not a committed document.
 ```
 mvn test                                        # surefire default: *Tests / *Test classes
 mvn test -Dtest=PaymentTests                    # one class
-mvn test -Dsurefire.suiteXmlFiles=testng.xml    # full suite, all 10 classes, in order
+mvn test -Psuite                                # full suite, all 10 classes, in order
 ```
+
+In PowerShell, the equivalent long form needs the quotes - `mvn test "-Dsurefire.suiteXmlFiles=testng.xml"` -
+because PowerShell splits the bare argument at the dot and Maven then reads
+`.suiteXmlFiles=testng.xml` as a lifecycle phase. The `-Psuite` profile exists to
+sidestep that.
 
 `testng.xml` exists because surefire's default pattern skips `Login`, `Rigster`,
 `filters`, `BillingAddress` and `end_to_end` - their names do not end in `Test`
