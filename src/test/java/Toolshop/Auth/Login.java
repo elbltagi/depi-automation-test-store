@@ -1,3 +1,5 @@
+package Toolshop.Auth;
+
 import Toolshop.Auth.constants.ValidationMessages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
