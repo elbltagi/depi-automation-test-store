@@ -34,6 +34,16 @@
             <artifactId>extentreports</artifactId>
             <version>5.1.2</version>
             <scope>test</scope>
+            <exclusions>
+                <!-- extentreports leaks Lombok 1.18.26 onto the classpath. It is a
+                     compile-time-only processor, nothing needs it at runtime, and
+                     versions below 1.18.46 crash javac on JDK 25+ (TypeTag.UNKNOWN),
+                     which breaks the IntelliJ build. -->
+                <exclusion>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
