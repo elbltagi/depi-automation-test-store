@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<!--
+  Full suite. The Extent report listener is NOT declared here: it is registered
+  via META-INF/services/org.testng.ITestNGListener so that IDE runs get the
+  report too. Declaring it in both places would double every entry.
+
+  Run: mvn test -Dsurefire.suiteXmlFiles=testng.xml
+-->
 <suite name="Toolshop UI Suite" verbose="1">
 
     <test name="Auth">

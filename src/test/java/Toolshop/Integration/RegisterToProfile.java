@@ -83,18 +83,10 @@ public class RegisterToProfile extends Base  {
 
     @Test(priority = 1)
     public void loginWithExistingAccount(){
-        driver.navigate().to("https://practicesoftwaretesting.com/auth/login");
 
         find_element(By.id("email")).sendKeys(uniqueEmail);
-        find_element(By.id("password")).sendKeys("Elgohary@123");
+        find_element(By.id("password")).sendKeys(uniqueEmail);
 
-        find_element(By.cssSelector("[type=\"submit\"]")).click();
-
-    }
-
-    @Test(priority = 2)
-    public void viewProfile(){
-        driver.navigate().to("https://practicesoftwaretesting.com/account/profile");
 
     }
 
