@@ -11,15 +11,6 @@ import org.testng.ITestResult;
 
 import java.util.Arrays;
 
-/**
- * Turns the TestNG lifecycle into the Extent summary report.
- *
- * Registered through src/test/resources/META-INF/services/org.testng.ITestNGListener,
- * so it is picked up automatically: by mvn test, by a testng.xml run, and by a
- * single test launched from IntelliJ. No test class references it.
- *
- * One ExtentTest per TestNG thread, so a parallel suite stays correct.
- */
 public class ExtentReportListener
         implements ITestListener, ISuiteListener, IConfigurationListener {
 
