@@ -23,7 +23,7 @@ public class PaymentTests extends Base {
 
     private void proceed() {
         find_element(By.cssSelector("[data-test=\"finish\"]")).click();
-        Assert.assertTrue(find_element(By.cssSelector("[data-test=\"payment-success-message\"]")).isDisplayed());
+        Assert.assertTrue(find_element(By.cssSelector("[data-test=\"payment-success-message\"]")).isDisplayed(), "Payment success message after finishing the order");
     }
 
     private void select(String method){

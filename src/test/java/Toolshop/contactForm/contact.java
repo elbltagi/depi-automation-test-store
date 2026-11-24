@@ -32,7 +32,7 @@ public class contact {
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-test='contact-submit']"))).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-test='first-name-error']")));
         boolean ErrorMessage = driver.findElement(By.cssSelector("[data-test='first-name-error']")).isDisplayed();
-        Assert.assertTrue(ErrorMessage);
+        Assert.assertTrue(ErrorMessage, "First name error shown when submitting an empty form");
 
     }
     @Test
@@ -54,7 +54,7 @@ public class contact {
         driver.findElement(By.cssSelector("[data-test='contact-submit']")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-test='email-error']")));
         WebElement ErrorMessage = driver.findElement(By.cssSelector("[data-test='email-error']"));
-        Assert.assertTrue(ErrorMessage.isDisplayed());
+        Assert.assertTrue(ErrorMessage.isDisplayed(), "Error shown for an invalid email address");
     }
 
     @Test
@@ -65,7 +65,7 @@ public class contact {
         driver.findElement(By.cssSelector("[data-test='contact-submit']")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-test='message-error']")));
         WebElement ErrorMessage = driver.findElement(By.cssSelector("[data-test='message-error']"));
-        Assert.assertTrue(ErrorMessage.isDisplayed());
+        Assert.assertTrue(ErrorMessage.isDisplayed(), "Error shown for a message that is too short");
     }
 
     @Test
@@ -85,7 +85,7 @@ public class contact {
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".alert-success")));
         WebElement SuccessMessage = driver.findElement(By.cssSelector(".alert-success"));
-        Assert.assertTrue(SuccessMessage.isDisplayed());
+        Assert.assertTrue(SuccessMessage.isDisplayed(), "Success message after submitting a valid contact form");
     }
     @AfterMethod
     public void end (){driver.close();}

@@ -32,7 +32,7 @@ public class filters {
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("[data-test='search-caption']")));
         String actual_result = driver.findElement(By.cssSelector("[data-test='search-caption']")).getText();
         String expected_result = "Searched for: Long Nose Pliers";
-        Assert.assertEquals(actual_result,expected_result);
+        Assert.assertEquals(actual_result,expected_result, "Search caption for a full product name");
     }
     @Test
     public void Search_with_a_partial_term(){
@@ -42,7 +42,7 @@ public class filters {
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("a.card")));
         String actual_result = driver.findElement(By.cssSelector("[data-test='search-caption']")).getText();
         String expected_result = "Searched for: Pli";
-        Assert.assertEquals(actual_result,expected_result);
+        Assert.assertEquals(actual_result,expected_result, "Search caption for a partial term");
     }
     @Test
     public void Search_with_no_results(){
@@ -62,7 +62,7 @@ public class filters {
         wait.until(ExpectedConditions.not(ExpectedConditions.textToBe(By.cssSelector(".card-title"), oldTitle)));
         String first_sort_element = driver.findElement(By.cssSelector("[data-test='product-name']")).getText();
     String expected_element = "Adjustable Wrench";
-    Assert.assertEquals(first_sort_element,expected_element);
+    Assert.assertEquals(first_sort_element,expected_element, "First product after sorting by name A-Z");
     }
     @Test
     public void Sort_by_name_Z_A(){
@@ -73,7 +73,7 @@ public class filters {
             wait.until(ExpectedConditions.not(ExpectedConditions.textToBe(By.cssSelector(".card-title"), oldTitle)));
             String first_sort_element = driver.findElement(By.cssSelector("[data-test='product-name']")).getText();
             String expected_element = "Wood Saw";
-            Assert.assertEquals(first_sort_element, expected_element);
+            Assert.assertEquals(first_sort_element, expected_element, "First product after sorting by name Z-A");
     }
     @Test
     public void Sort_by_price_ascending(){
@@ -84,7 +84,7 @@ public class filters {
         wait.until(ExpectedConditions.not(ExpectedConditions.textToBe(By.cssSelector(".card-title"), oldTitle)));
         String first_sort_element = driver.findElement(By.cssSelector("[data-test='product-name']")).getText();
         String expected_element = "Washers";
-        Assert.assertEquals(first_sort_element,expected_element);
+        Assert.assertEquals(first_sort_element,expected_element, "First product after sorting by price ascending");
 
     }
     @Test
@@ -96,7 +96,7 @@ public class filters {
         wait.until(ExpectedConditions.not(ExpectedConditions.textToBe(By.cssSelector(".card-title"), oldTitle)));
         String first_sort_element = driver.findElement(By.cssSelector("[data-test='product-name']")).getText();
         String expected_element = "Drawer Tool Cabinet";
-        Assert.assertEquals(first_sort_element,expected_element);
+        Assert.assertEquals(first_sort_element,expected_element, "First product after sorting by price descending");
 
     }
     @Test
@@ -107,7 +107,7 @@ public class filters {
         wait.until(ExpectedConditions.elementToBeClickable(hammerCategory)).click();
         wait.until(ExpectedConditions.not(ExpectedConditions.textToBe(By.cssSelector(".card-title"), oldTitle)));
         String firstProduct = driver.findElement(By.cssSelector("[data-test='product-name']")).getText();
-        Assert.assertEquals(firstProduct, "Claw Hammer with Shock Reduction Grip");
+        Assert.assertEquals(firstProduct, "Claw Hammer with Shock Reduction Grip", "First product after filtering by the Hammer category");
     }
 
     @Test
@@ -118,7 +118,7 @@ public class filters {
         wait.until(ExpectedConditions.elementToBeClickable(brandCheckbox)).click();
         wait.until(ExpectedConditions.not(ExpectedConditions.textToBe(By.cssSelector(".card-title"), oldTitle)));
         String firstProduct = driver.findElement(By.cssSelector("[data-test='product-name']")).getText();
-        Assert.assertEquals(firstProduct, "Claw Hammer with Shock Reduction Grip");
+        Assert.assertEquals(firstProduct, "Claw Hammer with Shock Reduction Grip", "First product after filtering by the ForgeFlex Tools brand");
     }
     @AfterMethod
     public void end (){

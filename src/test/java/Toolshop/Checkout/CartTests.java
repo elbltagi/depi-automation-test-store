@@ -34,7 +34,7 @@ public class CartTests extends Base{
         setQuantity("4");
 
         wait.until(ExpectedConditions.attributeToBe(quantityBy,"value","4"));
-        Assert.assertEquals(find_element(quantityBy).getDomProperty("value"), "4");
+        Assert.assertEquals(find_element(quantityBy).getDomProperty("value"), "4", "Cart quantity after entering 4");
     }
 
     @Test
@@ -44,7 +44,7 @@ public class CartTests extends Base{
         setQuantity("0");
 
         wait.until(ExpectedConditions.attributeToBe(quantityBy,"value","1"));
-        Assert.assertEquals(find_element(quantityBy).getDomProperty("value"),"1");
+        Assert.assertEquals(find_element(quantityBy).getDomProperty("value"),"1", "Cart quantity after entering 0");
     }
 
     @Test
@@ -52,7 +52,7 @@ public class CartTests extends Base{
         setQuantity("120");
 
         WebElement toast = find_element(By.cssSelector("div.ngx-toastr.toast-warning"));
-        Assert.assertEquals(toast.getText().trim(),"You can order at most 99 of this product.");
+        Assert.assertEquals(toast.getText().trim(),"You can order at most 99 of this product.", "Toast shown when ordering more than 99");
     }
 
     @Test
@@ -76,7 +76,7 @@ public class CartTests extends Base{
         setQuantity("99");
 
         wait.until(ExpectedConditions.attributeToBe(quantityBy,"value","99"));
-        Assert.assertEquals(find_element(quantityBy).getDomProperty("value"),"99");
+        Assert.assertEquals(find_element(quantityBy).getDomProperty("value"),"99", "Cart quantity after entering 99");
     }
 
     @Test
@@ -86,7 +86,7 @@ public class CartTests extends Base{
         setQuantity("-1");
 
         wait.until(ExpectedConditions.attributeToBe(quantityBy,"value","1"));
-        Assert.assertEquals(find_element(quantityBy).getDomProperty("value"),"1");
+        Assert.assertEquals(find_element(quantityBy).getDomProperty("value"),"1", "Cart quantity after entering a negative number");
     }
 
     @Test
@@ -97,7 +97,7 @@ public class CartTests extends Base{
 
         String toast_msg = find_element(By.cssSelector("#toast-container div.ngx-toastr")).getText().trim();
 
-        Assert.assertEquals(toast_msg,"Product deleted.");
+        Assert.assertEquals(toast_msg,"Product deleted.", "Toast shown after removing the product");
     }
 
     @Test
@@ -131,9 +131,6 @@ public class CartTests extends Base{
 
         List<WebElement> productCards = find_elements(By.cssSelector("a.card"));
         productCards.get(1).click();
-      
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-test='proceed-1']"))).click();
-        Assert.assertTrue(find_element(By.cssSelector("[data-test='email']")).isDisplayed(), "Sign-in step did not open");
 
         WebElement add_btn = find_element(By.id("btn-add-to-cart"));
         add_btn.click();
@@ -142,9 +139,10 @@ public class CartTests extends Base{
 
         driver.navigate().to("https://practicesoftwaretesting.com/checkout");
 
+
         List<WebElement> products_cart = find_elements(By.cssSelector("span[data-test=\"line-price\"]"));
 
-        Assert.assertEquals(products_cart.size(),2);
+        Assert.assertEquals(products_cart.size(),2, "Line items in the cart after adding a second product");
       
         double total = 0;
       

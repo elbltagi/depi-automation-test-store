@@ -76,9 +76,9 @@ public class BillingAddress extends Base {
 
         SoftAssert soft =new SoftAssert();
 
-        soft.assertEquals(waitForNonEmptyValue(By.id("street")).getDomProperty("value").trim(),"Tahrir Street");
-        soft.assertEquals(waitForNonEmptyValue(By.id("city")).getDomProperty("value").trim(),"Cairo");
-        soft.assertEquals(waitForNonEmptyValue(By.id("state")).getDomProperty("value").trim(),"Cairo");
+        soft.assertEquals(waitForNonEmptyValue(By.id("street")).getDomProperty("value").trim(),"Tahrir Street", "Street auto-filled from the postcode");
+        soft.assertEquals(waitForNonEmptyValue(By.id("city")).getDomProperty("value").trim(),"Cairo", "City auto-filled from the postcode");
+        soft.assertEquals(waitForNonEmptyValue(By.id("state")).getDomProperty("value").trim(),"Cairo", "State auto-filled from the postcode");
 
         soft.assertAll();
 

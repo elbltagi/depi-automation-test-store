@@ -39,7 +39,7 @@ public class end_to_end extends Base {
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("a.card")));
         String actual_result = driver.findElement(By.cssSelector("[data-test='search-caption']")).getText();
         String expected_result = "Searched for: Slip Joint Pliers";
-        Assert.assertEquals(actual_result,expected_result);
+        Assert.assertEquals(actual_result,expected_result, "Search caption for a full product name");
     }
     @Test (priority = 1)
     public void navigate_to_product (){
@@ -103,7 +103,7 @@ public class end_to_end extends Base {
         String confirm_payment = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-test='payment-success-message']"))).getText();
         String expected ="Payment was successful";
-        Assert.assertEquals(confirm_payment,expected);
+        Assert.assertEquals(confirm_payment,expected, "Payment confirmation message");
 
 
     }

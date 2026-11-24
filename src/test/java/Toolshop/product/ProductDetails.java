@@ -9,6 +9,10 @@ import org.testng.asserts.SoftAssert;
 
 public class ProductDetails extends ProductBase {
 
+    // specification badges under the product name (check both locators with Inspect)
+    private static final By PRODUCT_CATEGORY = By.cssSelector("[aria-label='category']");
+    private static final By PRODUCT_BRAND    = By.cssSelector("[aria-label='brand']");
+
     @Test(description = "TS-PRD-01 Product information renders")
     public void productInformationIsDisplayed() {
         openFirstProduct();
@@ -30,6 +34,7 @@ public class ProductDetails extends ProductBase {
         String nameOnCard = card.findElement(PRODUCT_NAME).getText().trim();
         String priceOnCard = card.findElement(By.cssSelector("[data-test='product-price']")).getText().trim();
         card.click();
+        find_element(UNIT_PRICE);   // only the details page has it, so the page has really opened
 
         Assert.assertEquals(find_element(PRODUCT_NAME).getText().trim(), nameOnCard,
                 "Name on the details page differs from the card");
@@ -73,5 +78,22 @@ public class ProductDetails extends ProductBase {
 
         Assert.assertEquals(driver.findElements(By.cssSelector("[data-test='product-title']")).size(), 1, "The same product was added as a second cart line");
         Assert.assertEquals(valueOf(By.cssSelector("[data-test='product-quantity']")), "2", "Cart line quantity did not merge to 2");
+    }
+
+    @Test(description = "TS-PRD-13 Product specification belongs to the product")
+    public void productSpecificationIsDisplayedAndMatches() {
+        openFirstProduct();
+        find_element(UNIT_PRICE);   // only the details page has it
+
+        String name = find_element(PRODUCT_NAME).getText().trim();
+        String imageAlt = find_element(By.cssSelector("img.figure-img")).getAttribute("alt");
+        String category = find_element(PRODUCT_CATEGORY).getText().trim();
+        String brand = find_element(PRODUCT_BRAND).getText().trim();
+
+        SoftAssert soft = new SoftAssert();
+        soft.assertEquals(imageAlt, name, "The image does not belong to this product");
+        soft.assertFalse(category.isEmpty(), "Category is missing");
+        soft.assertFalse(brand.isEmpty(), "Brand is missing");
+        soft.assertAll();
     }
 }

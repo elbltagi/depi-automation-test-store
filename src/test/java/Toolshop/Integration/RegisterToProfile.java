@@ -10,6 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class RegisterToProfile extends Base  {
 
@@ -18,6 +19,10 @@ public class RegisterToProfile extends Base  {
     @BeforeTest
     public void register(){
         driver.navigate().to("https://practicesoftwaretesting.com/auth/register");
+    }
+
+    private String getValue(By by){
+        return find_element(by).getDomProperty("value").trim();
     }
 
     @Test(priority = 0)
@@ -50,26 +55,26 @@ public class RegisterToProfile extends Base  {
         HouseNumber.sendKeys("32");
         WebElement Street = find_element(By.id("street"));
         Street.sendKeys("elbahgi street");
-//           city
+
         WebElement City = find_element(By.id("city"));
 
         City.sendKeys("berket elsabaa");
-//           state
+
         WebElement State = find_element(By.id("state"));
 
         State.sendKeys("elgarb");
-//           phone
+
         WebElement Phone = find_element(By.id("phone"));
 
         Phone.sendKeys("01558799766");
-//           email adress
+
         WebElement EmailAdress = find_element(By.id("email"));
 
         EmailAdress.sendKeys(uniqueEmail);
-//                 password
+
         WebElement password =find_element(By.id("password"));
         password.sendKeys("Elgohary@123");
-//             rigister button
+
         WebElement Rigister =find_element(By.cssSelector("[type=\"submit\"]"));
 
         Rigister.click();
@@ -85,8 +90,37 @@ public class RegisterToProfile extends Base  {
     public void loginWithExistingAccount(){
 
         find_element(By.id("email")).sendKeys(uniqueEmail);
-        find_element(By.id("password")).sendKeys(uniqueEmail);
+        find_element(By.id("password")).sendKeys("Elgohary@123");
 
+        find_element(By.cssSelector("[data-test=\"login-submit\"]")).click();
+
+        wait.until(ExpectedConditions.urlContains(ValidationMessages.ACCOUNT_URL_PART));
+        System.out.println("Current URL: " + driver.getCurrentUrl());
+        Assert.assertTrue(
+                driver.getCurrentUrl().contains(ValidationMessages.ACCOUNT_URL_PART),
+                "Login failed: User was not redirected to account page"
+        );
+
+    }
+
+    @Test(priority = 2)
+    public void validateProfileData(){
+        driver.navigate().to("https://practicesoftwaretesting.com/account/profile");
+
+        wait.until(ExpectedConditions.attributeToBe(By.id("first_name"),"value","mostafa"));
+
+        SoftAssert soft = new SoftAssert();
+
+        soft.assertEquals(getValue(By.id("first_name")),"mostafa", "First name on the profile");
+        soft.assertEquals(getValue(By.id("last_name")),"elgohary", "Last name on the profile");
+        soft.assertEquals(getValue(By.id("street")),"elbahgi street", "Street on the profile");
+        soft.assertEquals(getValue(By.id("postal_code")),"3651", "Postcode on the profile");
+        soft.assertEquals(getValue(By.id("city")),"berket elsabaa", "City on the profile");
+        soft.assertEquals(getValue(By.id("phone")),"01558799766", "Phone on the profile");
+        soft.assertEquals(getValue(By.id("state")),"elgarb", "State on the profile");
+        soft.assertEquals(getValue(By.id("country")),"EG", "Country on the profile");
+
+        soft.assertAll();
 
     }
 

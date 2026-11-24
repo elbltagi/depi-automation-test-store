@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -24,6 +25,7 @@ public class Base {
     protected WebElement find_element(By by){
         return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
+
     protected List<WebElement> find_elements(By by){
         return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
     }
@@ -46,7 +48,7 @@ public class Base {
 
         WebElement add_btn = find_element(By.id("btn-add-to-cart"));
         add_btn.click();
-org.testng.Assert.assertEquals(wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#toast-container div.ngx-toastr"))).getText().trim(), "Product added to shopping cart.");
+        Assert.assertEquals(wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#toast-container div.ngx-toastr"))).getText().trim(), "Product added to shopping cart.", "Toast shown after adding the product to the cart");
 
         driver.navigate().to("https://practicesoftwaretesting.com/checkout");
     }

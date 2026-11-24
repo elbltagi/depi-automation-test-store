@@ -22,7 +22,7 @@ public class QuantitySelector extends ProductBase {
         wait.until(ExpectedConditions.elementToBeClickable(PLUS)).click();
 
         waitForValue(QUANTITY, "2");
-        Assert.assertEquals(valueOf(QUANTITY), "2");
+        Assert.assertEquals(valueOf(QUANTITY), "2", "Quantity after one increment");
     }
 
     @Test(description = "TS-PRD-05 Quantity decrement")
@@ -33,7 +33,7 @@ public class QuantitySelector extends ProductBase {
         wait.until(ExpectedConditions.elementToBeClickable(MINUS)).click();
 
         waitForValue(QUANTITY, "1");
-        Assert.assertEquals(valueOf(QUANTITY), "1");
+        Assert.assertEquals(valueOf(QUANTITY), "1", "Quantity after one decrement");
     }
 
     @Test(description = "TS-PRD-06 Decrementing at one does not go below the minimum")
@@ -55,6 +55,6 @@ public class QuantitySelector extends ProductBase {
         setQuantity("5");
 
         waitForValue(QUANTITY, "5");
-        Assert.assertEquals(valueOf(QUANTITY), "5");
+        Assert.assertEquals(valueOf(QUANTITY), "5", "Quantity after typing 5");
     }
 }

@@ -44,4 +44,16 @@
         </classes>
     </test>
 
+    <test name="Contact">
+        <classes>
+            <class name="Toolshop.contactForm.contact"/>
+        </classes>
+    </test>
+
+    <test name="Integration">
+        <classes>
+            <class name="Toolshop.Integration.RegisterToProfile"/>
+        </classes>
+    </test>
+
 </suite>
